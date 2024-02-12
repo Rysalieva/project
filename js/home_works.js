@@ -1,9 +1,9 @@
 // Part - 1
-const gmailInput = document.getElementById('gmail_input');
-const gmailButton = document.getElementById('gmail_button');
-const gmailResult = document.getElementById('gmail_result');
+const gmailInput = document.getElementById('gmail_input')
+const gmailButton = document.getElementById('gmail_button')
+const gmailResult = document.getElementById('gmail_result')
 
-const regExp = /^[a-z][a-z\d_]{0,19}@gmail\.com$/;
+const regExp = /^[a-z][a-z\d_]{0,19}@gmail\.com$/
 
 
 // `^`: Символ начала строки. Гарантирует, что сопоставление начнется с начала строки.
@@ -20,93 +20,93 @@ const regExp = /^[a-z][a-z\d_]{0,19}@gmail\.com$/;
 // `$`: Символ конца строки. Гарантирует, что сопоставление заканчивается в конце строки.
 
 gmailButton.addEventListener('click', () => {
-    const gmailInputValue = gmailInput.value;
+    const gmailInputValue = gmailInput.value
     if (regExp.test(gmailInputValue)) {
-        gmailResult.textContent = 'Ok';
-        gmailResult.style.color = 'green';
+        gmailResult.textContent = 'Ok'
+        gmailResult.style.color = 'green'
     } else {
-        gmailResult.textContent = 'not Ok';
-        gmailResult.style.color = 'red';
+        gmailResult.textContent = 'not Ok'
+        gmailResult.style.color = 'red'
     }
-});
+})
 
 // Part - 2
-const movingBlock = document.getElementById("moving_block");
+const movingBlock = document.getElementById("moving_block")
 
 function moveRight() {
-    let currentPositionX = 0; // Начальная позиция блока по горизонтали
-    const parentWidth = movingBlock.parentElement.clientWidth; // Ширина родительского блока
-    const blockWidth = movingBlock.clientWidth; // Ширина маленького блока
+    let currentPositionX = 0 // Начальная позиция блока по горизонтали
+    const parentWidth = movingBlock.parentElement.clientWidth // Ширина родительского блока
+    const blockWidth = movingBlock.clientWidth // Ширина маленького блока
 
     const interval = setInterval(() => {
-        currentPositionX++;
-        movingBlock.style.left = `${currentPositionX}px`; // Устанавливаем новую позицию блока по горизонтали.
+        currentPositionX++
+        movingBlock.style.left = `${currentPositionX}px` // Устанавливаем новую позицию блока по горизонтали.
 
         // Проверяем, достиг ли блок правого края родительского блока.
         if (currentPositionX >= parentWidth - blockWidth) {
-            clearInterval(interval); // Останавливаем интервал движения вправо.
-            moveDown(); // Начинаем движение вниз.
+            clearInterval(interval) // Останавливаем интервал движения вправо.
+            moveDown() // Начинаем движение вниз.
         }
-    }, 7); //(7 миллисекунд)
+    }, 7) //(7 миллисекунд)
 }
 
 function moveDown() {
-    let currentPositionY = 0; // Начальная позиция блока по вертикали
-    const parentHeight = movingBlock.parentElement.clientHeight; // Высота родительского блока
-    const blockHeight = movingBlock.clientHeight; // Высота маленького блока
+    let currentPositionY = 0 // Начальная позиция блока по вертикали
+    const parentHeight = movingBlock.parentElement.clientHeight // Высота родительского блока
+    const blockHeight = movingBlock.clientHeight // Высота маленького блока
 
     const interval = setInterval(() => {
-        currentPositionY++;
-        movingBlock.style.top = `${currentPositionY}px`; // Устанавливаем новую позицию блока по вертикали.
+        currentPositionY++
+        movingBlock.style.top = `${currentPositionY}px` // Устанавливаем новую позицию блока по вертикали.
 
         // Проверяем, достиг ли блок нижнего края родительского блока.
         if (currentPositionY >= parentHeight - blockHeight) {
-            clearInterval(interval); // Останавливаем интервал движения вниз.
+            clearInterval(interval) // Останавливаем интервал движения вниз.
         }
-    }, 7); //(7 миллисекунд)
+    }, 7) //(7 миллисекунд)
 }
 
-moveRight();
+moveRight()
 
 // STOPWATCH
 
-const secondsElement = document.getElementById('seconds');
-const startButton = document.getElementById('start');
-const stopButton = document.getElementById('stop');
-const resetButton = document.getElementById('reset');
+const secondsElement = document.getElementById('seconds')
+const startButton = document.getElementById('start')
+const stopButton = document.getElementById('stop')
+const resetButton = document.getElementById('reset')
 
-let timer; // Переменная для хранения таймера
-let seconds = 0; // Переменная для хранения количества секунд
-let isRunning = false; // Переменная для отслеживания состояния таймера
+let timer // Переменная для хранения таймера
+let seconds = 0 // Переменная для хранения количества секунд
+let isRunning = false // Переменная для отслеживания состояния таймера
 
 function startTimer() {
     if (!isRunning) {
-        timer = setInterval(updateTimer, 1000);
-        isRunning = true;
+        timer = setInterval(updateTimer, 1000)
+        isRunning = true
     }
 }
 
 function stopTimer() {
-    clearInterval(timer);
-    isRunning = false;
+    clearInterval(timer)
+    isRunning = false
 }
 
 function resetTimer() {
-    clearInterval(timer);
-    seconds = 0;
-    updateDisplay();
-    isRunning = false;
+    clearInterval(timer)
+    seconds = 0
+    updateDisplay()
+    isRunning = false
 }
 
 function updateTimer() {
-    seconds++;
-    updateDisplay();
+    seconds++
+    updateDisplay()
 }
 
 function updateDisplay() {
-    secondsElement.textContent = seconds;
+    secondsElement.textContent = seconds
 }
 
-startButton.addEventListener('click', startTimer);
-stopButton.addEventListener('click', stopTimer);
-resetButton.addEventListener('click', resetTimer);
+startButton.addEventListener('click', startTimer)
+stopButton.addEventListener('click', stopTimer)
+resetButton.addEventListener('click', resetTimer)
