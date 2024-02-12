@@ -31,25 +31,82 @@ gmailButton.addEventListener('click', () => {
 });
 
 // Part - 2
-
 const movingBlock = document.getElementById("moving_block");
-function moveRight() {
-    let currentPosition = 0; // Начальная позиция блока
 
+function moveRight() {
+    let currentPositionX = 0; // Начальная позиция блока по горизонтали
+    const parentWidth = movingBlock.parentElement.clientWidth; // Ширина родительского блока
+    const blockWidth = movingBlock.clientWidth; // Ширина маленького блока
 
     const interval = setInterval(() => {
-        currentPosition++;
-        movingBlock.style.left = `${currentPosition}px`; // Устанавливаем новую позицию блока.
+        currentPositionX++;
+        movingBlock.style.left = `${currentPositionX}px`; // Устанавливаем новую позицию блока по горизонтали.
 
-        // Проверяем, достиг ли блок края родительского блока.
-        if (currentPosition >= 450) { // 450px - ширина родительского блока минус ширина маленького блока.
-            clearInterval(interval); // Останавливаем интервал.
-            setTimeout(() => {
-                movingBlock.style.left = '0px'; // Сбрасываем позицию блока в начало.
-                moveRight(); // Запускаем движение снова.
-            }, 0.5); // Задержка перед повторным запуском движения.
+        // Проверяем, достиг ли блок правого края родительского блока.
+        if (currentPositionX >= parentWidth - blockWidth) {
+            clearInterval(interval); // Останавливаем интервал движения вправо.
+            moveDown(); // Начинаем движение вниз.
         }
-    }, 7); // Интервал обновления позиции блока (7 миллисекунд)
+    }, 7); //(7 миллисекунд)
+}
+
+function moveDown() {
+    let currentPositionY = 0; // Начальная позиция блока по вертикали
+    const parentHeight = movingBlock.parentElement.clientHeight; // Высота родительского блока
+    const blockHeight = movingBlock.clientHeight; // Высота маленького блока
+
+    const interval = setInterval(() => {
+        currentPositionY++;
+        movingBlock.style.top = `${currentPositionY}px`; // Устанавливаем новую позицию блока по вертикали.
+
+        // Проверяем, достиг ли блок нижнего края родительского блока.
+        if (currentPositionY >= parentHeight - blockHeight) {
+            clearInterval(interval); // Останавливаем интервал движения вниз.
+        }
+    }, 7); //(7 миллисекунд)
 }
 
 moveRight();
+
+// STOPWATCH
+
+const secondsElement = document.getElementById('seconds');
+const startButton = document.getElementById('start');
+const stopButton = document.getElementById('stop');
+const resetButton = document.getElementById('reset');
+
+let timer; // Переменная для хранения таймера
+let seconds = 0; // Переменная для хранения количества секунд
+let isRunning = false; // Переменная для отслеживания состояния таймера
+
+function startTimer() {
+    if (!isRunning) {
+        timer = setInterval(updateTimer, 1000);
+        isRunning = true;
+    }
+}
+
+function stopTimer() {
+    clearInterval(timer);
+    isRunning = false;
+}
+
+function resetTimer() {
+    clearInterval(timer);
+    seconds = 0;
+    updateDisplay();
+    isRunning = false;
+}
+
+function updateTimer() {
+    seconds++;
+    updateDisplay();
+}
+
+function updateDisplay() {
+    secondsElement.textContent = seconds;
+}
+
+startButton.addEventListener('click', startTimer);
+stopButton.addEventListener('click', stopTimer);
+resetButton.addEventListener('click', resetTimer);
